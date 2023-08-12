@@ -32,7 +32,7 @@ scrape_configs:
 ```
 docker run -d \
     -p 10010:10010 
-    quay.io/jjack/herpstat_spyderweb_exporter:latest
+    ghcr.io/jjack/herpstat_spyderweb_exporter:latest
     --herpstat.address 1.2.3.4
 ```
 
@@ -43,7 +43,7 @@ version: '3.8'
 
 services:
   herpstat_spyderweb_exporter:
-    image: quay.io/jjack/herpstat_spyderweb_exporter:latest
+    image: ghcr.io/jjack/herpstat_spyderweb_exporter:latest
     container_name: herpstat_spyderweb_exporter
     command:
       - '--herpstat.address=1.2.3.4'
