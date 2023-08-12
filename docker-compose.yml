@@ -1,0 +1,12 @@
+---
+version: '3.8'
+
+services:
+  herpstat_exporter:
+    image: quay.io/jjack/herpstat_exporter:latest
+    container_name: herpstat_exporter
+    command:
+      - '--herpstat.address=1.2.3.4'
+    ports:
+      - 10010:10010
+    restart: unless-stopped
