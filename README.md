@@ -57,11 +57,11 @@ services:
 |  CLI Flag | Docker Env Var | Description  |  Default |  Required |
 |---|---|---|---|---|
 | --herpstat.address | HERPSTAT_SPYDERWEB_EXPORTER_ADDRESS | Address of your Herpstat Spyderweb |  | YES |
-| --web.port | HERPSTAT_EXPORTER_WEB_PORT | The port on which herpstat_spyderweb_exporter listens | 10010 |  |
-| --web.telemetry-path | HERPSTAT_EXPORTER_TELEMETRY_PATH | The path on whcih herpstat_spyderweb_exporter exposes metrics. | /metrics |  |
-| --web.disable-exporter-metrics | HERPSTAT_EXPORTER_DISABLE_EXPORTER_METRICS |Exclude metrics about the exporter itself (promhttp_*, process_*, go_*). | no |  |
+| --web.port | HERPSTAT_SPYDERWEB_EXPORTER_WEB_PORT | The port on which herpstat_spyderweb_exporter listens | 10010 |  |
+| --web.telemetry-path | HERPSTAT_SPYDERWEB_EXPORTER_TELEMETRY_PATH | The path on whcih herpstat_spyderweb_exporter exposes metrics. | /metrics |  |
+| --web.disable-exporter-metrics | HERPSTAT_SPYDERWEB_EXPORTER_DISABLE_EXPORTER_METRICS |Exclude metrics about the exporter itself (promhttp_*, process_*, go_*). | no |  |
 | --help | n/a | Show context-sensitive help | no | |
-| --debug | HERPSTAT_EXPORTER_DEBUG | Enable debugging log output. (It's noisy!) | no | |
+| --debug | HERPSTAT_SPYDERWEB_EXPORTER_DEBUG | Enable debugging log output. (It's noisy!) | no | |
 
 
 ## Metrics Collected
