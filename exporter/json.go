@@ -24,8 +24,8 @@ type system struct {
 	Name        string          `json:"nickname"`
 	IP          string          `json:"ip"`
 	Mac         string          `json:"mac"`
-	SafetyRelay string          `json:"safetyrelay"`
 	Firmware    json.RawMessage `json:"firmware"`
+	SafetyRelay string          `json:"safetyrelay"`
 	OutputCount float64         `json:"numberofoutputs"`
 	PowerResets float64         `json:"powerresets"`
 	Temp        float64         `json:"internaltemp"`
@@ -111,7 +111,6 @@ func (info *info) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// TODO: custom unmarshal?
 func (o *output) ramping() float64 {
 	if o.Ramping == rampingOff {
 		return 0

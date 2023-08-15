@@ -48,10 +48,10 @@ func (e *Exporter) Collect(ch chan<- prometheus.Metric) {
 		ch <- newGaugeMetric(e.metrics.outputPowerLimit, output.PowerLimit, output.labelValues(&systemName)...)
 		ch <- newGaugeMetric(e.metrics.outputProbeTemp, output.ProbeTemp, output.labelValues(&systemName)...)
 		ch <- newGaugeMetric(e.metrics.outputProbeHumidity, output.ProbeHumidity, output.labelValues(&systemName)...)
-		// ch <- newGaugeMetric(e.metrics.outputAlarmEnabled, output.AlarmEnabled, output.labelValues(&systemName)...)
+		ch <- newGaugeMetric(e.metrics.outputAlarmEnabled, output.AlarmEnabled, output.labelValues(&systemName)...)
 		ch <- newGaugeMetric(e.metrics.outputAlarmHigh, output.AlarmHigh, output.labelValues(&systemName)...)
 		ch <- newGaugeMetric(e.metrics.outputAlarmLow, output.AlarmLow, output.labelValues(&systemName)...)
-		// ch <- newGaugeMetric(e.metrics.outputRamping, output.ramping(), output.labelValues(&systemName)...)
+		ch <- newGaugeMetric(e.metrics.outputRamping, output.ramping(), output.labelValues(&systemName)...)
 		ch <- newGaugeMetric(e.metrics.outputRampEnd, output.RampEnd, output.labelValues(&systemName)...)
 		ch <- newGaugeMetric(e.metrics.outputError, output.ErrorCode, output.errorLabelValues(&systemName)...)
 	}
