@@ -1,6 +1,6 @@
 # herpstat_spyderweb_exporter
 [![Build Status](https://github.com/jjack/herpstat_spyderweb_exporter/actions/workflows/docker-build.yml/badge.svg)](https://github.com/jjack/herpstat_spyderweb_exporter/actions/workflows/docker-build.yml)
-[![Current Version](https://img.shields.io/badge/Version-v0.0.1-brightgreen)](https://github.com/jjack/herpstat_spyderweb_exporter/releases/latest)
+[![Current Version](https://img.shields.io/badge/Version-v0.0.2-brightgreen)](https://github.com/jjack/herpstat_spyderweb_exporter/releases/latest)
 
 A [Prometheus Exporter](https://prometheus.io/) for the Herpstat Sypderweb thermostat/humidity controller by [Spyder Robotics](https://spyderrobotics.com/).
 
