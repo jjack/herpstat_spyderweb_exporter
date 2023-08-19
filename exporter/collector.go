@@ -7,6 +7,15 @@ import (
 	"github.com/prometheus/client_golang/prometheus"
 )
 
+const (
+	minPower       = 0
+	minTemperature = 0
+	minHumidity    = 0
+	maxPower       = 100
+	maxTemperature = 212
+	maxHumidity    = 100
+)
+
 // Describes all of the metric types that we're exporting.
 // Declaring this (along with [exporter.Collect]) implements a [prometheus.Collector]
 func (e *Exporter) Describe(ch chan<- *prometheus.Desc) {
@@ -35,7 +44,10 @@ func (e *Exporter) Collect(ch chan<- prometheus.Metric) {
 	}
 
 	ch <- newCounterMetric(e.metrics.info, 1, e.herpstat.info.system.infoLabelValues()...)
-	ch <- newGaugeMetric(e.metrics.temp, e.herpstat.info.system.Temp, e.herpstat.info.system.labelValues()...)
+
+	if hasGoodValue(minTemperature, maxTemperature, e.herpstat.info.system.Temp) {
+		ch <- newGaugeMetric(e.metrics.temp, e.herpstat.info.system.Temp, e.herpstat.info.system.labelValues()...)
+	}
 	ch <- newGaugeMetric(e.metrics.safetyRelay, e.herpstat.info.system.safetyrelay(), e.herpstat.info.system.safetyRelayLabelValues()...)
 	ch <- newGaugeMetric(e.metrics.resets, e.herpstat.info.system.PowerResets, e.herpstat.info.system.labelValues()...)
 
@@ -46,8 +58,13 @@ func (e *Exporter) Collect(ch chan<- prometheus.Metric) {
 		ch <- newCounterMetric(e.metrics.outputInfo, 1, output.infoLabelValues(&systemName)...)
 		ch <- newGaugeMetric(e.metrics.outputPower, output.Power, output.labelValues(&systemName)...)
 		ch <- newGaugeMetric(e.metrics.outputPowerLimit, output.PowerLimit, output.labelValues(&systemName)...)
-		ch <- newGaugeMetric(e.metrics.outputProbeTemp, output.ProbeTemp, output.labelValues(&systemName)...)
-		ch <- newGaugeMetric(e.metrics.outputProbeHumidity, output.ProbeHumidity, output.labelValues(&systemName)...)
+
+		if hasGoodValue(minTemperature, maxTemperature, output.ProbeTemp) {
+			ch <- newGaugeMetric(e.metrics.outputProbeTemp, output.ProbeTemp, output.labelValues(&systemName)...)
+		}
+		if hasGoodValue(minHumidity, maxHumidity, output.ProbeHumidity) {
+			ch <- newGaugeMetric(e.metrics.outputProbeHumidity, output.ProbeHumidity, output.labelValues(&systemName)...)
+		}
 		ch <- newGaugeMetric(e.metrics.outputAlarmEnabled, output.AlarmEnabled, output.labelValues(&systemName)...)
 		ch <- newGaugeMetric(e.metrics.outputAlarmHigh, output.AlarmHigh, output.labelValues(&systemName)...)
 		ch <- newGaugeMetric(e.metrics.outputAlarmLow, output.AlarmLow, output.labelValues(&systemName)...)
@@ -67,4 +84,17 @@ func newCounterMetric(desc *prometheus.Desc, value float64, labelValues ...strin
 // creates a new [prometheus.GaugeValue] metric
 func newGaugeMetric(desc *prometheus.Desc, value float64, labelValues ...string) prometheus.Metric {
 	return prometheus.MustNewConstMetric(desc, prometheus.GaugeValue, value, labelValues...)
+}
+
+// if a probe is pulled out in the middle of a poll, we'll get some extremely weird values.
+// this checks to see if any of those are out of some theoretically-typical ranges (eg: you aren't
+// going to heat something above boiling with this)
+func hasGoodValue(minWanted, maxWanted, value float64) bool {
+	if minWanted > value {
+		return false
+	} else if maxWanted < value {
+		return false
+	}
+
+	return true
 }
