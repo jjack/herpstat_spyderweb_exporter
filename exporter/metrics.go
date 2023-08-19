@@ -7,13 +7,13 @@ import (
 const namespace = "herpstat"
 
 var (
-	systemLabelNames            = []string{"name"}
-	systemSafetyRelayLabelNames = []string{"name", "relay"}
-	systemInfoLabelNames        = []string{"name", "ip", "mac", "firmware", "outputs"}
+	systemLabelNames            = []string{"system"}
+	systemSafetyRelayLabelNames = []string{"system", "relay"}
+	systemInfoLabelNames        = []string{"system", "ip", "mac", "firmware", "outputs"}
 
-	outputLabelNames      = []string{"system", "id"}
-	outputInfoLabelNames  = []string{"system", "id", "name", "mode"}
-	outputErrorLabelNames = []string{"system", "id", "error"}
+	outputLabelNames      = []string{"system", "output"}
+	outputInfoLabelNames  = []string{"system", "output", "name", "mode"}
+	outputErrorLabelNames = []string{"system", "output", "error"}
 )
 
 type metrics struct {
